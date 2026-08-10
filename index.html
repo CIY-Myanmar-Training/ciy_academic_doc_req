@@ -103,7 +103,7 @@ textarea{resize:vertical;min-height:90px;}
           <label><input type="checkbox" name="reason" value="Job Application"> Job Application</label>
           <label><input type="checkbox" name="reason" value="Scholarship Application"> Scholarship Application</label>
           <label><input type="checkbox" name="reason" value="Professional Certification"> Professional Certification</label>
-          <label id="reason-other-label"><input type="checkbox" name="reason" value="other" onchange="toggleOther('reason-other-input',this)"> Other</label>
+          <label><input type="checkbox" name="reason" value="other" onchange="toggleOther('reason-other-input',this)"> Other</label>
         </div>
         <input type="text" id="reason-other-input" class="other-input" placeholder="Please specify…">
       </div>
@@ -156,19 +156,12 @@ textarea{resize:vertical;min-height:90px;}
       </div>
 
       <div class="field">
-        <label>Who You Want to Request Your Recommendation Letter From <span class="req">*</span></label>
-        <div class="hint" style="margin-bottom:10px">Select two Academic Coordinators.</div>
-        <div class="grid2">
-          <div>
-            <label style="margin-bottom:6px">AC Recommendation</label>
-            <select id="ac1">
-              <option value="">— Select AC —</option>
-              <option>Coach Morgan - CIY.Club Myanmar</option>
-               <option>Coach Tommy - ScopeIT Education</option>
-            </select>
-          </div>
-          
-        </div>
+        <label>Who You Want Your Recommendation Letter From <span class="req">*</span></label>
+        <select id="ac1">
+          <option value="">— Select Academic Coordinator —</option>
+          <option value="Coach Morgan - CIY.Club Myanmar">Coach Morgan - CIY.Club Myanmar</option>
+          <option value="Coach Tommy - ScopeIT Education">Coach Tommy - ScopeIT Education</option>
+        </select>
       </div>
     </div>
 
@@ -219,7 +212,6 @@ async function submitRequest() {
   const empid        = document.getElementById('empid').value.trim();
   const level        = document.getElementById('level').value;
   const ac1          = document.getElementById('ac1').value;
-  const ac2          = document.getElementById('ac2').value;
   const institution  = document.getElementById('institution').value.trim();
   const achievements = document.getElementById('achievements').value.trim();
   const deadline     = document.getElementById('deadline').value;
@@ -233,34 +225,35 @@ async function submitRequest() {
   const docOther = document.getElementById('doctype-other-input').value.trim();
   if (docOther) doctypes = doctypes.replace('other', docOther);
 
-  if (!name || !email || !phone || !position || !campus || !period || !empid || !level || !ac1 || !ac2 || !achievements || !deadline) {
+  if (!name || !email || !phone || !position || !campus || !period || !empid || !level || !ac1 || !achievements || !deadline) {
     alert('Please fill in all required fields.'); return;
   }
-  if (!reasons)  { alert('Please select at least one reason for request.'); return; }
-  if (!doctypes) { alert('Please select at least one document type.'); return; }
-  if (ac1 === ac2) { alert('Please select two different ACs.'); return; }
+  if (!reasons)     { alert('Please select at least one reason for request.'); return; }
+  if (!doctypes)    { alert('Please select at least one document type.'); return; }
   if (!declaration) { alert('Please agree to the Declaration & Privacy Agreement.'); return; }
 
   const btn = document.getElementById('submit-btn');
   btn.textContent = 'Submitting…'; btn.disabled = true;
 
   const payload = {
-    name, email, phone, position, campus, period, empid, level, ac1, ac2,
+    name, email, phone, position, campus, region: campus, period,
+    empid, level, ac1, ac2: ac1,
     reasons, doctypes, institution, achievements, deadline,
     submitted: new Date().toISOString()
   };
 
   try {
     await fetch(APPS_SCRIPT_URL, {
-      method: 'POST', mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(payload)
     });
     document.getElementById('form-area').style.display = 'none';
     document.getElementById('success-msg').style.display = 'block';
   } catch(e) {
     alert('Submission failed. Please try again.');
-    btn.textContent = 'Submit Request'; btn.disabled = false;
+    btn.textContent = 'Submit Request';
+    btn.disabled = false;
   }
 }
 </script>

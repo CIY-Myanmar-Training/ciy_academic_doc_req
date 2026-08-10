@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document Upload — ScopeIT Academy</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@300;400;600;700&display=swap');
+:root{--navy:#0B1F3A;--gold:#B8912A;--teal:#016B78;--light:#E4DFD4;--cream:#FAF8F3;--mid:#7A7060;--red:#8B1A1A;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Source Sans 3',sans-serif;background:#E8E4DC;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 20px 80px;}
+.topbar{width:100%;max-width:580px;background:var(--navy);padding:16px 28px;border-bottom:3px solid var(--gold);border-radius:4px 4px 0 0;}
+.topbar h1{font-family:'Playfair Display',serif;font-size:18px;color:#fff;}
+.topbar p{font-size:11px;color:#8A9BB0;margin-top:3px;letter-spacing:1px;text-transform:uppercase;}
+.card{width:100%;max-width:580px;background:#fff;border:1px solid var(--light);box-shadow:0 4px 24px rgba(11,31,58,0.08);padding:32px;border-radius:0 0 4px 4px;}
+.section-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--navy);font-weight:700;padding-bottom:8px;border-bottom:1.5px solid var(--light);margin-bottom:18px;}
+.field{margin-bottom:18px;}
+label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--mid);margin-bottom:6px;}
+.req{color:var(--red);}
+input,select{width:100%;padding:10px 14px;border:1.5px solid var(--light);border-radius:3px;font-size:14px;font-family:'Source Sans 3',sans-serif;color:#1A1410;background:var(--cream);transition:border-color 0.2s;}
+input:focus,select:focus{outline:none;border-color:var(--teal);background:#fff;}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A7060' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+.upload-area{border:2px dashed var(--light);border-radius:3px;padding:32px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--cream);margin-top:6px;}
+.upload-area:hover{border-color:var(--teal);background:#f0fafa;}
+.upload-area.has-file{border-color:#155724;background:#f0fff4;}
+.upload-icon{font-size:32px;margin-bottom:8px;}
+.upload-label{font-size:14px;color:var(--mid);}
+.upload-label strong{color:var(--navy);}
+.file-name{font-size:13px;color:#155724;font-weight:600;margin-top:6px;}
+input[type=file]{display:none;}
+.info-box{background:var(--cream);border:1px solid var(--light);border-radius:3px;padding:14px 18px;margin-bottom:20px;font-size:13px;line-height:1.7;display:none;}
+.info-box strong{color:var(--navy);}
+.btn{width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:3px;font-family:'Playfair Display',serif;font-size:16px;font-weight:700;cursor:pointer;border-bottom:3px solid var(--gold);transition:all 0.2s;margin-top:8px;}
+.btn:hover{background:var(--teal);}
+.btn:disabled{background:#999;border-color:#777;cursor:not-allowed;}
+.progress{display:none;margin-top:12px;}
+.progress-bar{width:100%;height:6px;background:var(--light);border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--teal);width:0%;transition:width 0.3s;}
+.progress-text{font-size:12px;color:var(--mid);margin-top:6px;text-align:center;}
+.success{display:none;text-align:center;padding:32px;background:#f0fff4;border:1.5px solid #155724;border-radius:3px;}
+.success h2{color:#155724;font-family:'Playfair Display',serif;font-size:20px;margin-bottom:8px;}
+.success p{color:#155724;font-size:14px;line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>Document Upload</h1>
+  <p>ScopeIT Academy × CIY.Club Myanmar</p>
+</div>
+
+<div class="card">
+  <div id="upload-area">
+    <div class="section-title">Upload Document for Requestor</div>
+
+    <div class="field">
+      <label>Requestor Name <span class="req">*</span></label>
+      <input type="text" id="req-name" placeholder="e.g. John, Aye Mya San" oninput="loadRequests()">
+    </div>
+
+    <div class="field">
+      <label>Select Request <span class="req">*</span></label>
+      <select id="req-select" onchange="showRequestInfo()">
+        <option value="">— Type name above to search —</option>
+      </select>
+    </div>
+
+    <div class="info-box" id="req-info"></div>
+
+    <div class="field">
+      <label>Document Type You Are Uploading <span class="req">*</span></label>
+      <select id="doc-type">
+        <option value="">— Select Document Type —</option>
+        <option value="Recommendation Letter">Recommendation Letter</option>
+        <option value="Employment Verification Letter">Employment Verification Letter</option>
+        <option value="Transcript">Transcript</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Your Name (Uploader) <span class="req">*</span></label>
+      <select id="uploader">
+        <option value="">— Select Your Name —</option>
+        <option value="Coach Morgan">Coach Morgan</option>
+        <option value="Coach Tommy">Coach Tommy</option>
+        <option value="HR Team">HR Team</option>
+        <option value="Training Manager">Training Manager</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Upload File <span class="req">*</span></label>
+      <div class="upload-area" id="drop-zone" onclick="document.getElementById('file-input').click()" ondragover="event.preventDefault()" ondrop="handleDrop(event)">
+        <div class="upload-icon">📄</div>
+        <div class="upload-label"><strong>Click to upload</strong> or drag & drop</div>
+        <div class="upload-label" style="font-size:12px;margin-top:4px">PDF, DOCX, JPG, PNG — max 10MB</div>
+        <div class="file-name" id="file-name-display"></div>
+      </div>
+      <input type="file" id="file-input" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" onchange="handleFileSelect(this)">
+    </div>
+
+    <div class="progress" id="progress">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-text" id="progress-text">Uploading…</div>
+    </div>
+
+    <button class="btn" id="upload-btn" onclick="uploadDocument()">Upload Document</button>
+  </div>
+
+  <div class="success" id="success-msg">
+    <h2>✓ Document Uploaded</h2>
+    <p>The document has been saved to the requestor's folder.<br>The system will notify the requestor once all their documents are ready.</p>
+    <button class="btn" style="margin-top:20px;max-width:200px" onclick="resetForm()">Upload Another</button>
+  </div>
+</div>
+
+<script>
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxoc_5nvNBhZmnY8SH0U0OOh8y4j-5NedXwQP1LZjwgwjvnjIfRMe4WLLp2a-Kih82b/exec"; // ← your Apps Script URL
+let selectedFile = null;
+let allRequests  = [];
+
+// Load approved requests matching name
+async function loadRequests() {
+  const name = document.getElementById('req-name').value.trim();
+  const sel  = document.getElementById('req-select');
+  if (name.length < 2) { sel.innerHTML = '<option value="">— Type name above to search —</option>'; return; }
+
+  try {
+    const res  = await fetch(`${APPS_SCRIPT_URL}?action=getApprovedRequests&name=${encodeURIComponent(name)}`);
+    const data = await res.json();
+    allRequests = data.requests || [];
+    sel.innerHTML = '<option value="">— Select Request —</option>' +
+      allRequests.map(r => `<option value="${r.id}">${r.name} — ${r.empid} — Level ${r.level} (${r.id})</option>`).join('');
+    document.getElementById('req-info').style.display = 'none';
+  } catch(e) {
+    sel.innerHTML = '<option value="">Could not load — check connection</option>';
+  }
+}
+
+function showRequestInfo() {
+  const id  = document.getElementById('req-select').value;
+  const req = allRequests.find(r => r.id === id);
+  const box = document.getElementById('req-info');
+  if (!req) { box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  box.innerHTML = `
+    <strong>${req.name}</strong> &nbsp;|&nbsp; ID: ${req.empid} &nbsp;|&nbsp; Level ${req.level}<br>
+    <strong>Documents Requested:</strong> ${req.doctypes}<br>
+    <strong>Deadline:</strong> ${req.deadline}
+  `;
+}
+
+function handleFileSelect(input) {
+  if (input.files[0]) setFile(input.files[0]);
+}
+function handleDrop(e) {
+  e.preventDefault();
+  if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
+}
+function setFile(f) {
+  if (f.size > 10 * 1024 * 1024) { alert('File too large. Max 10MB.'); return; }
+  selectedFile = f;
+  document.getElementById('file-name-display').textContent = `✓ ${f.name}`;
+  document.getElementById('drop-zone').classList.add('has-file');
+}
+
+async function uploadDocument() {
+  const reqId    = document.getElementById('req-select').value;
+  const docType  = document.getElementById('doc-type').value;
+  const uploader = document.getElementById('uploader').value;
+
+  if (!reqId)      { alert('Please select a request.'); return; }
+  if (!docType)    { alert('Please select document type.'); return; }
+  if (!uploader)   { alert('Please select your name.'); return; }
+  if (!selectedFile){ alert('Please select a file to upload.'); return; }
+
+  const btn = document.getElementById('upload-btn');
+  btn.disabled = true; btn.textContent = 'Uploading…';
+  document.getElementById('progress').style.display = 'block';
+
+  // Convert file to base64
+  const base64 = await new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload = () => res(reader.result.split(',')[1]);
+    reader.onerror = rej;
+    reader.readAsDataURL(selectedFile);
+  });
+
+  // Animate progress
+  let pct = 0;
+  const interval = setInterval(() => {
+    pct = Math.min(pct + 10, 85);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = `Uploading… ${pct}%`;
+  }, 200);
+
+  try {
+    const req = allRequests.find(r => r.id === reqId);
+    const payload = {
+      action: 'uploadDocument',
+      requestId: reqId,
+      requesterName: req ? req.name : '',
+      empid: req ? req.empid : '',
+      docType, uploader,
+      fileName: selectedFile.name,
+      fileBase64: base64,
+      mimeType: selectedFile.type
+    };
+
+    const response = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
+
+    clearInterval(interval);
+    document.getElementById('progress-fill').style.width = '100%';
+    document.getElementById('progress-text').textContent = 'Done!';
+
+    document.getElementById('upload-area').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+  } catch(e) {
+    clearInterval(interval);
+    alert('Upload failed: ' + e.message);
+    btn.disabled = false; btn.textContent = 'Upload Document';
+    document.getElementById('progress').style.display = 'none';
+  }
+}
+
+function resetForm() {
+  selectedFile = null; allRequests = [];
+  document.getElementById('req-name').value = '';
+  document.getElementById('req-select').innerHTML = '<option value="">— Type name above to search —</option>';
+  document.getElementById('doc-type').value = '';
+  document.getElementById('uploader').value = '';
+  document.getElementById('file-name-display').textContent = '';
+  document.getElementById('drop-zone').classList.remove('has-file');
+  document.getElementById('req-info').style.display = 'none';
+  document.getElementById('progress').style.display = 'none';
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('upload-area').style.display = 'block';
+  document.getElementById('success-msg').style.display = 'none';
+  document.getElementById('upload-btn').disabled = false;
+  document.getElementById('upload-btn').textContent = 'Upload Document';
+}
+</script>
+</body>
+</html>

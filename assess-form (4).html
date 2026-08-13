@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AC Assessment — ScopeIT Academy</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@300;400;600;700&display=swap');
+:root{--navy:#0B1F3A;--gold:#B8912A;--teal:#016B78;--light:#E4DFD4;--cream:#FAF8F3;--mid:#7A7060;--red:#8B1A1A;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Source Sans 3',sans-serif;background:#E8E4DC;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 20px 80px;}
+.topbar{width:100%;max-width:720px;background:var(--navy);padding:14px 28px;border-bottom:3px solid var(--gold);border-radius:4px 4px 0 0;}
+.topbar h1{font-family:'Playfair Display',serif;font-size:17px;color:#fff;}
+.topbar p{font-size:11px;color:#8A9BB0;margin-top:2px;letter-spacing:1px;text-transform:uppercase;}
+.card{width:100%;max-width:720px;background:#fff;border:1px solid var(--light);box-shadow:0 4px 24px rgba(11,31,58,0.08);padding:32px;border-radius:0 0 4px 4px;}
+.info-box{background:var(--cream);border:1px solid var(--light);border-radius:3px;padding:16px 20px;margin-bottom:24px;font-size:13px;line-height:1.8;}
+.info-box strong{color:var(--navy);}
+.field{margin-bottom:20px;}
+label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--mid);margin-bottom:6px;}
+select,textarea{width:100%;padding:10px 14px;border:1.5px solid var(--light);border-radius:3px;font-size:14px;font-family:'Source Sans 3',sans-serif;color:#1A1410;background:var(--cream);transition:border-color 0.2s;}
+select:focus,textarea:focus{outline:none;border-color:var(--teal);background:#fff;}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A7060' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+textarea{resize:vertical;min-height:100px;}
+.divider{border:none;border-top:1px solid var(--light);margin:24px 0;}
+.section-label{font-family:'Playfair Display',serif;font-size:14px;color:var(--navy);margin-bottom:12px;font-weight:700;padding-bottom:6px;border-bottom:1px solid var(--light);}
+.section-group{margin-bottom:24px;}
+
+/* Criteria table */
+.eval-table{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:13px;}
+.eval-table thead th{background:var(--navy);color:#fff;padding:8px 10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;text-align:center;}
+.eval-table thead th:first-child{text-align:left;}
+.eval-table tbody td{padding:9px 10px;border-bottom:1px solid var(--light);vertical-align:middle;}
+.eval-table tbody tr:nth-child(even) td{background:var(--cream);}
+.eval-table tbody td:first-child{font-weight:600;color:var(--navy);}
+.rating-cell{text-align:center;}
+.rating-btn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border:1.5px solid var(--light);border-radius:50%;background:#fff;cursor:pointer;font-size:11px;font-weight:700;transition:all 0.15s;color:var(--mid);}
+.rating-btn:hover{border-color:var(--teal);color:var(--teal);}
+.rating-btn.sel-5{background:#155724;border-color:#155724;color:#fff;}
+.rating-btn.sel-4{background:#1e7e34;border-color:#1e7e34;color:#fff;}
+.rating-btn.sel-3{background:#856404;border-color:#856404;color:#fff;}
+.rating-btn.sel-2{background:#c0392b;border-color:#c0392b;color:#fff;}
+.rating-btn.sel-1{background:#721C24;border-color:#721C24;color:#fff;}
+.rating-legend{display:flex;gap:12px;font-size:10px;color:var(--mid);margin-bottom:12px;flex-wrap:wrap;}
+.rating-legend span{display:flex;align-items:center;gap:4px;}
+.legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+
+/* Decision */
+.decision-row{display:flex;gap:16px;margin-bottom:20px;}
+.decision-btn{flex:1;padding:14px;border:2px solid var(--light);border-radius:3px;background:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:'Source Sans 3',sans-serif;}
+.decision-btn.approve{border-color:#155724;color:#155724;}
+.decision-btn.approve.selected{background:#155724;color:#fff;}
+.decision-btn.reject{border-color:var(--red);color:var(--red);}
+.decision-btn.reject.selected{background:var(--red);color:#fff;}
+
+.btn{width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:3px;font-family:'Playfair Display',serif;font-size:16px;font-weight:700;cursor:pointer;border-bottom:3px solid var(--gold);transition:all 0.2s;margin-top:8px;}
+.btn:hover{background:var(--teal);}
+.btn:disabled{background:#999;border-color:#777;cursor:not-allowed;}
+.success{display:none;text-align:center;padding:32px;background:#f0fff4;border:1.5px solid #155724;border-radius:3px;}
+.success h2{color:#155724;font-family:'Playfair Display',serif;font-size:20px;margin-bottom:8px;}
+.success p{color:#155724;font-size:14px;line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>Academic Coordinator Assessment</h1>
+  <p>ScopeIT Academy × CIY.Club Myanmar</p>
+</div>
+
+<div class="card">
+  <div id="assess-area">
+
+    <div class="info-box" id="request-info"><strong>Loading request details…</strong></div>
+
+    <div class="field">
+      <label>You Are <span style="color:var(--red)">*</span></label>
+      <select id="ac-name">
+        <option value="">— Select Your Name —</option>
+        <option value="Coach Morgan">Coach Morgan</option>
+        <option value="Coach Tommy">Coach Tommy</option>
+      </select>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-label">Performance Evaluation</div>
+
+    <div class="rating-legend">
+      <span><span class="legend-dot" style="background:#155724"></span> 5 — Exceptional</span>
+      <span><span class="legend-dot" style="background:#1e7e34"></span> 4 — Exceeds Expectations</span>
+      <span><span class="legend-dot" style="background:#856404"></span> 3 — Meets Expectations</span>
+      <span><span class="legend-dot" style="background:#c0392b"></span> 2 — Below Expectations</span>
+      <span><span class="legend-dot" style="background:#721C24"></span> 1 — Unsatisfactory</span>
+    </div>
+
+    <!-- SECTION A -->
+    <div class="section-group">
+      <div class="section-label">A. Communication & Leadership</div>
+      <table class="eval-table">
+        <thead><tr>
+          <th>Criteria</th>
+          <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>1. Collaboration and Feedback</td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c1',1)">1</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c1',2)">2</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c1',3)">3</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c1',4)">4</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c1',5)">5</button></td>
+          </tr>
+          <tr><td>2. Professionalism and Ethics</td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c2',1)">1</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c2',2)">2</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c2',3)">3</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c2',4)">4</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c2',5)">5</button></td>
+          </tr>
+          <tr><td>3. Organization Culture Fit</td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c3',1)">1</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c3',2)">2</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c3',3)">3</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c3',4)">4</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c3',5)">5</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SECTION B -->
+    <div class="section-group">
+      <div class="section-label">B. CIY Club Contribution</div>
+      <table class="eval-table">
+        <thead><tr>
+          <th>Criteria</th>
+          <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>4. Teaching Excellence</td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c4',1)">1</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c4',2)">2</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c4',3)">3</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c4',4)">4</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c4',5)">5</button></td>
+          </tr>
+          <tr><td>5. Student Outcomes</td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c5',1)">1</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c5',2)">2</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c5',3)">3</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c5',4)">4</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c5',5)">5</button></td>
+          </tr>
+          <tr><td>6. Attendance & Reliability</td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c6',1)">1</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c6',2)">2</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c6',3)">3</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c6',4)">4</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c6',5)">5</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SECTION E -->
+    <div class="section-group">
+      <div class="section-label">E. Department Head Recommendation</div>
+      <table class="eval-table">
+        <thead><tr>
+          <th>Criteria</th>
+          <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>7. Overall Performance</td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c7',1)">1</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c7',2)">2</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c7',3)">3</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c7',4)">4</button></td>
+            <td class="rating-cell"><button class="rating-btn" onclick="rate('c7',5)">5</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="field">
+      <label>Department Head Comments</label>
+      <textarea id="comments" placeholder="Write your assessment comments or recommendation notes here…"></textarea>
+    </div>
+
+    <div style="background:var(--cream);border:1px solid var(--light);border-radius:3px;padding:12px 16px;font-size:13px;color:var(--mid);margin-bottom:16px;">
+      ℹ️ Result is determined automatically. A minimum average of <strong>3.5 / 5</strong> is required to pass.
+    </div>
+
+    <button class="btn" id="submit-btn" onclick="submitAssessment()">Submit Assessment</button>
+  </div>
+
+  <div class="success" id="success-msg">
+    <h2>✓ Assessment Submitted</h2>
+    <p>Thank you. Your assessment has been recorded.<br>The requestor will be notified once all assessments are complete.</p>
+  </div>
+</div>
+
+<script>
+const APPS_SCRIPT_URL = "YOUR_APPS_SCRIPT_URL";
+let decision = "";
+let requestId = "";
+const ratings = { c1:0, c2:0, c3:0, c4:0, c5:0, c6:0, c7:0 };
+
+const params = new URLSearchParams(window.location.search);
+requestId = params.get('id') || '';
+
+window.onload = async function() {
+  if (!requestId) {
+    document.getElementById('request-info').innerHTML = '<strong style="color:red">No request ID found in URL.</strong>';
+    return;
+  }
+  try {
+    const res  = await fetch(`${APPS_SCRIPT_URL}?action=getRequest&id=${requestId}`);
+    const data = await res.json();
+    document.getElementById('request-info').innerHTML = `
+      <strong>Name:</strong> ${data.name} &nbsp;|&nbsp;
+      <strong>Employee ID:</strong> ${data.empid} &nbsp;|&nbsp;
+      <strong>Campus:</strong> ${data.region}<br>
+      <strong>Level:</strong> ${data.level} &nbsp;|&nbsp;
+      <strong>Deadline:</strong> ${data.deadline}
+      ${data.ac1 ? `<br><strong>RC Letter requested from:</strong> ${data.ac1}` : ''}
+    `;
+  } catch(e) {
+    document.getElementById('request-info').innerHTML = '<strong>Could not load request. Check your link.</strong>';
+  }
+};
+
+function rate(criteriaId, value) {
+  ratings[criteriaId] = value;
+  // Update button styles for this criteria
+  const allBtns = document.querySelectorAll(`button[onclick="rate('${criteriaId}',${1})"], button[onclick="rate('${criteriaId}',${2})"], button[onclick="rate('${criteriaId}',${3})"], button[onclick="rate('${criteriaId}',${4})"], button[onclick="rate('${criteriaId}',${5})"]`);
+  allBtns.forEach(btn => {
+    btn.className = 'rating-btn';
+    const v = parseInt(btn.getAttribute('onclick').match(/\d+\)$/)[0]);
+    if (v === value) btn.classList.add(`sel-${value}`);
+  });
+}
+
+function setDecision(d) {
+  decision = d;
+  document.getElementById('btn-approve').classList.toggle('selected', d === 'Approved');
+  document.getElementById('btn-reject').classList.toggle('selected', d === 'Rejected');
+}
+
+async function submitAssessment() {
+  const acName  = document.getElementById('ac-name').value;
+  const comments= document.getElementById('comments').value.trim();
+
+  if (!acName)   { alert('Please select your name.'); return; }
+  const unrated = Object.entries(ratings).filter(([k,v]) => v === 0);
+  if (unrated.length > 0) { alert('Please rate all criteria before submitting.'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Submitting…'; btn.disabled = true;
+
+  const payload = {
+    action: 'submitAssessment', requestId, acName,
+    decision: 'Scored', // decision calculated server-side from scores
+    comments,
+    ratings: {
+      collaboration:   ratings.c1,
+      professionalism: ratings.c2,
+      cultureFit:      ratings.c3,
+      teaching:        ratings.c4,
+      studentOutcomes: ratings.c5,
+      attendance:      ratings.c6,
+      overall:         ratings.c7
+    },
+    submittedAt: new Date().toISOString()
+  };
+
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
+    document.getElementById('assess-area').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+  } catch(e) {
+    alert('Submission failed. Please try again.');
+    btn.textContent = 'Submit Assessment'; btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>

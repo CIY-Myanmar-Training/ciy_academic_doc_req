@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document Request — ScopeIT Academy</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@300;400;600;700&display=swap');
+:root{--navy:#0B1F3A;--gold:#B8912A;--teal:#016B78;--light:#E4DFD4;--cream:#FAF8F3;--mid:#7A7060;--red:#8B1A1A;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Source Sans 3',sans-serif;background:#E8E4DC;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 20px 80px;}
+.topbar{width:100%;max-width:660px;background:var(--navy);padding:20px 28px;border-bottom:3px solid var(--gold);border-radius:4px 4px 0 0;}
+.topbar h1{font-family:'Playfair Display',serif;font-size:20px;color:#fff;}
+.topbar p{font-size:12px;color:#8A9BB0;margin-top:4px;line-height:1.6;}
+.card{width:100%;max-width:660px;background:#fff;border:1px solid var(--light);box-shadow:0 4px 24px rgba(11,31,58,0.08);padding:36px;border-radius:0 0 4px 4px;}
+.notice{background:#FFF8E1;border-left:4px solid var(--gold);padding:14px 18px;border-radius:2px;margin-bottom:28px;font-size:13px;line-height:1.7;color:#5a4a00;}
+.notice strong{display:block;margin-bottom:2px;}
+.section{margin-bottom:28px;}
+.section-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--navy);font-weight:700;padding-bottom:8px;border-bottom:1.5px solid var(--light);margin-bottom:18px;}
+.field{margin-bottom:18px;}
+label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--mid);margin-bottom:6px;}
+.req{color:var(--red);}
+.hint{font-size:11px;color:var(--mid);font-style:italic;margin-top:4px;}
+input,select,textarea{width:100%;padding:10px 14px;border:1.5px solid var(--light);border-radius:3px;font-size:14px;font-family:'Source Sans 3',sans-serif;color:#1A1410;background:var(--cream);transition:border-color 0.2s;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal);background:#fff;}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A7060' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+textarea{resize:vertical;min-height:90px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.checkbox-group{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+.checkbox-group label{font-size:13px;font-weight:400;text-transform:none;letter-spacing:0;color:#1A1410;display:flex;align-items:center;gap:8px;cursor:pointer;}
+.checkbox-group input[type=checkbox]{width:16px;height:16px;flex-shrink:0;accent-color:var(--navy);}
+.other-input{margin-top:8px;display:none;}
+.hidden{display:none;}
+.privacy-box{background:var(--cream);border:1px solid var(--light);border-radius:3px;padding:16px 18px;font-size:12.5px;line-height:1.8;color:#444;margin-bottom:16px;}
+.privacy-box strong{color:var(--navy);display:block;margin-bottom:4px;}
+.declaration-check{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.6;cursor:pointer;}
+.declaration-check input{width:17px;height:17px;flex-shrink:0;margin-top:2px;accent-color:var(--navy);}
+.btn{width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:3px;font-family:'Playfair Display',serif;font-size:16px;font-weight:700;cursor:pointer;border-bottom:3px solid var(--gold);transition:all 0.2s;margin-top:8px;}
+.btn:hover{background:var(--teal);}
+.btn:disabled{background:#999;border-color:#777;cursor:not-allowed;}
+.success{display:none;text-align:center;padding:36px;background:#f0fff4;border:1.5px solid #155724;border-radius:3px;}
+.success h2{color:#155724;font-family:'Playfair Display',serif;font-size:22px;margin-bottom:10px;}
+.success p{color:#155724;font-size:14px;line-height:1.7;}
+@media(max-width:540px){.grid2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>Document Request</h1>
+  <p>Thank you for your dedication and contributions to our Academic Team. Please complete this form accurately.</p>
+</div>
+
+<div class="card">
+  <div id="form-area">
+
+    <div class="notice">
+      <strong>⚠️ Important Note</strong>
+      Please submit at least <strong>10 to 14 days</strong> before your deadline to ensure sufficient time for processing.
+    </div>
+
+    <!-- SECTION 1: Personal Info -->
+    <div class="section">
+      <div class="section-title">Personal Information</div>
+      <div class="field">
+        <label>Full Name <span class="req">*</span></label>
+        <input type="text" id="name" placeholder="Your full name">
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="your@email.com">
+        </div>
+        <div class="field">
+          <label>Phone Number <span class="req">*</span></label>
+          <input type="tel" id="phone" placeholder="e.g. 09 123 456 789">
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label>Position <span class="req">*</span></label>
+          <input type="text" id="position" placeholder="e.g. ICT Educator Level 3">
+        </div>
+        <div class="field">
+          <label>Campus Name <span class="req">*</span></label>
+          <input type="text" id="campus" placeholder="e.g. Yangon Downtown">
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label>Employee ID <span class="req">*</span></label>
+          <input type="text" id="empid" placeholder="e.g. CIY0007">
+        </div>
+        <div class="field">
+          <label>Certified Level <span class="req">*</span></label>
+          <select id="level">
+            <option value="">— Select —</option>
+            <option value="2">Level 2</option>
+            <option value="3">Level 3</option>
+            <option value="4">Level 4</option>
+            <option value="5">Level 5</option>
+            <option value="6">Level 6</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Employee Period <span class="req">*</span></label>
+        <input type="text" id="period" placeholder="e.g. From 22.06.2024 to 31.07.2026">
+        <div class="hint">Start Date and End Date</div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: Request Details -->
+    <div class="section">
+      <div class="section-title">Request Details</div>
+
+      <div class="field">
+        <label>Primary Reason for Request <span class="req">*</span></label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="reason" value="University / Further Study Application"> University / Further Study Application</label>
+          <label><input type="checkbox" name="reason" value="Job Application"> Job Application</label>
+          <label><input type="checkbox" name="reason" value="Scholarship Application"> Scholarship Application</label>
+          <label><input type="checkbox" name="reason" value="Professional Certification"> Professional Certification</label>
+          <label><input type="checkbox" name="reason" value="other" onchange="toggleOther('reason-other-input',this)"> Other</label>
+        </div>
+        <input type="text" id="reason-other-input" class="other-input" placeholder="Please specify…">
+      </div>
+
+      <div class="field">
+        <label>Type of Document Requested <span class="req">*</span></label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="doctype" value="Recommendation Letter" onchange="toggleACField()"> Recommendation Letter</label>
+          <label><input type="checkbox" name="doctype" value="Employment Verification Letter"> Employment Verification Letter</label>
+          <label><input type="checkbox" name="doctype" value="Transcript"> Transcript</label>
+          <label><input type="checkbox" name="doctype" value="other" onchange="toggleOther('doctype-other-input',this)"> Other</label>
+        </div>
+        <input type="text" id="doctype-other-input" class="other-input" placeholder="Please specify…">
+      </div>
+
+      <!-- AC SELECTION — only shown when RC Letter is checked -->
+      <div class="field hidden" id="ac-field">
+        <label>Recommendation Letter From <span class="req">*</span></label>
+        <select id="ac1">
+          <option value="">— Select Academic Coordinator —</option>
+          <option value="Coach Morgan - CIY.Club Myanmar">Coach Morgan - CIY.Club Myanmar</option>
+          <option value="Coach Tommy - ScopeIT Education">Coach Tommy - ScopeIT Education</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Target Institution / Company Name & Specific Requirements</label>
+        <textarea id="institution" placeholder="e.g. University name, specific skills to highlight, or formatting requirements."></textarea>
+      </div>
+
+      <div class="field">
+        <label>Key Achievements or Projects During Your Time With Us <span class="req">*</span></label>
+        <textarea id="achievements" placeholder="Describe your key achievements, projects, or contributions…" style="min-height:110px"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Date Needed By <span class="req">*</span></label>
+        <input type="date" id="deadline">
+      </div>
+    </div>
+
+    <!-- SECTION 3: Declaration -->
+    <div class="section">
+      <div class="section-title">Declaration & Privacy Agreement</div>
+      <div class="privacy-box">
+        <strong>Privacy Commitment</strong>
+        The Academic Leadership Team guarantees that all personal details and application information submitted will be kept strictly confidential.
+        <strong style="margin-top:10px">Applicant Declaration</strong>
+        I confirm that the information provided is accurate and that any requested documents will be used solely for the stated purpose and institution specified in this request.
+      </div>
+      <label class="declaration-check">
+        <input type="checkbox" id="declaration">
+        I have read and agree to the Privacy Commitment and Applicant Declaration above. <span class="req">*</span>
+      </label>
+    </div>
+
+    <button class="btn" id="submit-btn" onclick="submitRequest()">Submit Request</button>
+  </div>
+
+  <div class="success" id="success-msg">
+    <h2>✓ Request Submitted</h2>
+    <p>Your request has been received.<br>Academic Coordinators have been notified.<br><br>You will receive a result email within <strong>5 working days</strong> of your stated deadline.</p>
+  </div>
+</div>
+
+<script>
+const APPS_SCRIPT_URL = "YOUR_APPS_SCRIPT_URL";
+
+function toggleOther(inputId, checkbox) {
+  const el = document.getElementById(inputId);
+  el.style.display = checkbox.checked ? 'block' : 'none';
+  if (!checkbox.checked) el.value = '';
+}
+
+function toggleACField() {
+  const rcChecked = [...document.querySelectorAll('input[name="doctype"]:checked')]
+    .some(el => el.value === 'Recommendation Letter');
+  document.getElementById('ac-field').classList.toggle('hidden', !rcChecked);
+  if (!rcChecked) document.getElementById('ac1').value = '';
+}
+
+function getChecked(name) {
+  return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(el => el.value).join(', ');
+}
+
+async function submitRequest() {
+  const name        = document.getElementById('name').value.trim();
+  const email       = document.getElementById('email').value.trim();
+  const phone       = document.getElementById('phone').value.trim();
+  const position    = document.getElementById('position').value.trim();
+  const campus      = document.getElementById('campus').value.trim();
+  const empid       = document.getElementById('empid').value.trim();
+  const level       = document.getElementById('level').value;
+  const period      = document.getElementById('period').value.trim();
+  const institution = document.getElementById('institution').value.trim();
+  const achievements= document.getElementById('achievements').value.trim();
+  const deadline    = document.getElementById('deadline').value;
+  const declaration = document.getElementById('declaration').checked;
+  const ac1         = document.getElementById('ac1').value;
+
+  let reasons  = getChecked('reason');
+  const reasonOther = document.getElementById('reason-other-input').value.trim();
+  if (reasonOther) reasons = reasons.replace('other', reasonOther);
+
+  let doctypes = getChecked('doctype');
+  const docOther = document.getElementById('doctype-other-input').value.trim();
+  if (docOther) doctypes = doctypes.replace('other', docOther);
+
+  if (!name || !email || !phone || !position || !campus || !empid || !level || !period || !achievements || !deadline) {
+    alert('Please fill in all required fields.'); return;
+  }
+  if (!reasons)  { alert('Please select at least one reason for request.'); return; }
+  if (!doctypes) { alert('Please select at least one document type.'); return; }
+  if (doctypes.includes('Recommendation Letter') && !ac1) {
+    alert('Please select an Academic Coordinator for the Recommendation Letter.'); return;
+  }
+  if (!declaration) { alert('Please agree to the Declaration & Privacy Agreement.'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Submitting…'; btn.disabled = true;
+
+  const payload = {
+    name, email, phone, position, campus, empid, level, period,
+    institution, achievements, deadline, reasons, doctypes, ac1,
+    submitted: new Date().toISOString()
+  };
+
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
+    document.getElementById('form-area').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+  } catch(e) {
+    alert('Submission failed. Please try again.');
+    btn.textContent = 'Submit Request'; btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
